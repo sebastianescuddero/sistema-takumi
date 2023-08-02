@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.datatables.net/v/bs5/dt-1.13.5/datatables.min.css" rel="stylesheet"/>
+
+    <title>Document</title>
+</head>
+<body style="background:#f3f3f3; font-family: 'Courier New', Courier, monospace;">
+    <div class="container">
+      <div class="header-top">
+          <div class="titulo" style="padding: 20px;">
+            <h2><strong>Gestión de Ventas</strong></h2>
+          </div>
+      </div>
+      <div style="background-color: white; padding: 10px; border-top: 5px solid gainsboro; margin-top:25px;">
+        <div style="padding: 10px;">
+          <h4 style="margin: 0;">¿Qué desea realizar?</h4>
+        </div>
+        <div class="accion" style="display:inline-flex; padding: 10px; text-align: center;">
+            <div style="background-color: slategrey; width: 200px; border-radius: 10px; padding: 10px 0px; margin-right: 5px;">
+              <a type="button" data-bs-toggle="modal" data-bs-target="#nuevo-ingreso" style="text-decoration: none; color: whitesmoke;"><i class="fas fa-money-check-alt" style="display: block;
+                  inline-size: -webkit-fill-available;"></i>Nuevo ingreso</a>
+            </div>
+            <div style="background-color: slategrey; width: 200px; border-radius: 10px; padding: 10px 0px; margin-left: 5px;">
+              <a type="button" data-bs-toggle="modal" data-bs-target="#nuevo-egreso" style="text-decoration: none; color: whitesmoke;"><i class="fas fa-hand-holding-usd" style="display: block;
+                  inline-size: -webkit-fill-available;"></i>Nuevo egreso</a>
+            </div>
+            <div style="background-color: slategrey; width: 200px; border-radius: 10px; padding: 10px 0px; margin-left: 5px;">
+                <a type="button" data-bs-toggle="modal" data-bs-target="#pagos-tarjeta" style="text-decoration: none; color: whitesmoke;"><i class="fas fa-credit-card" style="display: block;
+                    inline-size: -webkit-fill-available;"></i>Pagos tarjeta</a>
+            </div>
+            <div style="background-color: slategrey; width: 200px; border-radius: 10px; padding: 10px 0px; margin-left: 5px;">
+            <a type="button" data-bs-toggle="modal" data-bs-target="#bancos" style="text-decoration: none; color: whitesmoke;"><i class="fas fa-university" style="display: block;
+                inline-size: -webkit-fill-available;"></i>Bancos</a>
+            </div>
+            <div style="background-color: slategrey; width: 200px; border-radius: 10px; padding: 10px 0px; margin-left: 5px;">
+                <a type="button" data-bs-toggle="modal" data-bs-target="#caja-mayor" style="text-decoration: none; color: whitesmoke;"><i class="fas fa-inbox" style="display: block;
+                    inline-size: -webkit-fill-available;"></i>Caja Mayor</a>
+            </div>
+        </div>
+      </div>
+
+      <!-- Modal Ingreso-->
+      <div class="modal fade" id="nuevo-ingreso" tabindex="-1" aria-labelledby="nuevo-ingresoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+          <div class="modal-content">
+            <div class="modal-header" style="background-color: slategrey;">
+              <h5 class="modal-title" id="exampleModalLabel" style="color: white;"><strong>NUEVO INGRESO</strong></h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form class="row g-3" id="#" action="#" method="post">
+                <div class="col-md-3">
+                  <label class="form-label">NÚMERO CONTROL</label>
+                  <input type="text" class="form-control" id="#" name="" readonly>
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">MONTO</label>
+                  <input type="text" class="form-control" id="#" name="#" >
+                </div>
+                <div class="col-md-5">
+                  <label class="form-label">MÉTODO PAGO</label>
+                  <select class="form-control" id="#" name="#">
+                  </select>
+                </div>
+                <div class="col-md-2" style="display: grid;">
+                    <button type="submit" class="btn btn-outline-success">Agregar</button>
+                </div>
+                <div class="col-md-3" style="margin-inline-start: auto; display: grid;">
+                  <button type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#nuevo-ingreso-otros">Otros ingresos</button>
+                </div>
+              </form>
+            </div>
+            <div class="col-12" style="padding: 10px;">
+              <table id="table-detalle-ingreso" class="table table-striped" style="width:100%;">
+                <thead>
+                    <tr>
+                        <th scope="col">MONTO</th>
+                        <th scope="col">MÉTODO DE PAGO</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+              <button type="button" class="btn btn-primary">Registrar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="nuevo-ingreso-otros" tabindex="-1" aria-labelledby="nuevo-ingreso-otrosLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+          <div class="modal-content">
+            <div class="modal-header" style="background-color: slategrey;">
+              <h5 class="modal-title" id="exampleModalLabel" style="color: white;"><strong>OTROS INGRESOS</strong></h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form class="row g-3" id="#" action="#" method="post">
+                <div class="col-md-3">
+                  <label class="form-label">NÚMERO CONTROL</label>
+                  <input type="text" class="form-control" id="#" name="" readonly>
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">MONTO</label>
+                  <input type="text" class="form-control" id="#" name="">
+                </div>
+                <div class="col-md-5">
+                  <label class="form-label">MÉTODO PAGO</label>
+                  <select class="form-control" id="#" name="#">
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">DESCRIPCIÓN OTRO INGRESO</label>
+                  <input type="text" class="form-control" id="#" name="">
+                </div>
+                <div class="col-md-2" style="align-self: flex-end; display: grid;">
+                    <button type="submit" class="btn btn-outline-success">Agregar</button>
+                </div>
+              </form>
+            </div>
+            <div class="col-12" style="padding: 10px;">
+              <table id="table-detalle-ingreso-otros" class="table table-striped" style="width:100%;">
+                <thead>
+                    <tr>
+                        <th scope="col">MONTO</th>
+                        <th scope="col">MÉTODO PAGO</th>
+                        <th scope="col">DESCRIPCION OTRO INGRESO</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+              <button type="button" class="btn btn-primary">Registrar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fin Modal Ingreso-->
+
+      <!-- Modal Egreso-->
+      <div class="modal fade" id="nuevo-egreso" tabindex="-1" aria-labelledby="nuevo-egresoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+          <div class="modal-content">
+            <div class="modal-header" style="background-color: slategrey;">
+              <h5 class="modal-title" id="exampleModalLabel" style="color: white;"><strong>NUEVO EGRESO</strong></h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form class="row g-3" id="#" action="#" method="post">
+                <div class="col-md-3">
+                  <label class="form-label">NÚMERO CONTROL</label>
+                  <input type="text" class="form-control" id="#" name="" readonly>
+                </div>
+                <div class="col-md-3">
+                  <label class="form-label">MONTO</label>
+                  <input type="text" class="form-control" id="#" name="">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">DESCRIPCIÓN EGRESO</label>
+                  <input type="text" class="form-control" id="#" name="">
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">TIPO EGRESO</label>
+                  <select class="form-control" id="#" name="#">
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">MÉTODO PAGO</label>
+                  <select class="form-control" id="#" name="#">
+                  </select>
+                </div>                
+                <div class="col-md-2" style="align-self: flex-end; display: grid;">
+                    <button type="submit" class="btn btn-outline-success">Agregar</button>
+                </div>
+              </form>
+            </div>
+            <div class="col-12" style="padding: 10px;">
+              <table id="table-detalle-egreso" class="table table-striped" style="width:100%;">
+                <thead>
+                    <tr>
+                        <th scope="col">MONTO</th>
+                        <th scope="col">DESCRIPCIÓN EGRESO</th>
+                        <th scope="col">TIPO EGRESO</th>
+                        <th scope="col">MÉTODO PAGO</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+              <button type="button" class="btn btn-primary">Registrar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fin Modal Egreso-->
+
+      <!-- Modal Pagos Tarjeta-->
+      <div class="modal fade" id="pagos-tarjeta" tabindex="-1" aria-labelledby="pagos-tarjetaLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+          <div class="modal-content">
+            <div class="modal-header" style="background-color: slategrey;">
+              <h5 class="modal-title" id="pagos-tarjetaLabel" style="color: white;"><strong>PAGOS POR TARJETA</strong></h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form class="row g-3" id="#" action="#" method="post">
+                <div class="col-md-3">
+                  <label class="form-label">NÚMERO REGISTRO</label>
+                  <input type="text" class="form-control" id="#" name="" readonly>
+                </div>
+                <div class="col-md-3">
+                  <label class="form-label">MONTO TOTAL</label>
+                  <input type="text" class="form-control" id="#" name="">
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">POS</label>
+                  <select class="form-control" id="#" name="#">
+                  </select>
+                </div>              
+                <div class="col-md-2" style="align-self: flex-end; display: grid;">
+                    <button type="submit" class="btn btn-outline-success">Agregar</button>
+                </div>
+              </form>
+            </div>
+            <div class="col-12" style="padding: 10px;">
+              <table id="table-detalle-pagos-tarjeta" class="table table-striped" style="width:100%;">
+                <thead>
+                    <tr>
+                        <th scope="col">MONTO TOTAL</th>
+                        <th scope="col">POS</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+              <button type="button" class="btn btn-primary">Registrar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fin Modal Pagos Tarjeta-->
+
+      <!-- Modal Bancos-->
+      <div class="modal fade" id="bancos" tabindex="-1" aria-labelledby="bancosLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+          <div class="modal-content">
+            <div class="modal-header" style="background-color: slategrey;">
+              <h5 class="modal-title" id="exampleModalLabel" style="color: white;"><strong>BANCOS</strong></h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div>
+                <h4>¿A qué banco desea ingresar?</h4>
+              </div>
+              <div class="accion" style="display:inline-flex; padding: 10px; text-align: center;">
+                <div class="col-12" style="background-color: cornflowerblue; border-radius: 10px; padding: 10px 0px; margin-left: 5px;">
+                  <a type="button" data-bs-toggle="modal" data-bs-target="#bancos-bbva" style="text-decoration: none; color: whitesmoke;">BBVA</a>
+                </div>
+                <div class="col-12" style="background-color: coral; border-radius: 10px; padding: 10px 0px; margin-left: 5px;">
+                <a type="button" data-bs-toggle="modal" data-bs-target="#bancos-bcp" style="text-decoration: none; color: whitesmoke;">BCP</a>
+                </div>
+                <div class="col-12" style="background-color: seagreen; border-radius: 10px; padding: 10px 0px; margin-left: 5px;">
+                    <a type="button" data-bs-toggle="modal" data-bs-target="#bancos-interbank" style="text-decoration: none; color: whitesmoke;">INTERBANK</a>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fin Modal Bancos-->
+
+      <!-- Modal Bancos BBVA-->
+      <div class="modal fade" id="bancos-bbva" tabindex="-1" aria-labelledby="bancos-bbvaLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+          <div class="modal-content">
+            <div class="modal-header" style="background-color: cornflowerblue;">
+              <h5 class="modal-title" id="exampleModalLabel" style="color: white;"><strong>BBVA</strong></h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form class="row g-3" id="#" action="#" method="post">
+                <div class="col-md-3">
+                  <label class="form-label">NÚMERO REGISTRO</label>
+                  <input type="text" class="form-control" id="#" name="" readonly>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">DESCRIPCIÓN</label>
+                  <input type="text" class="form-control" id="#" name="">
+                </div>
+                <div class="col-md-3">
+                  <label class="form-label">MONTO</label>
+                  <input type="text" class="form-control" id="#" name="">
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">TIPO DE MOVIMIENTO</label>
+                  <select class="form-control" id="#" name="#">
+                  </select>
+                </div>              
+                <div class="col-md-2" style="align-self: flex-end; display: grid;">
+                    <button type="submit" class="btn btn-outline-success">Agregar</button>
+                </div>
+              </form>
+            </div>
+            <div class="col-12" style="padding: 10px;">
+              <table id="table-detalle-bancos-bbva" class="table table-striped" style="width:100%;">
+                <thead>
+                    <tr>
+                        <th scope="col">DESCRIPCIÓN</th>
+                        <th scope="col">MONTO</th>
+                        <th scope="col">TIPO MOVIMIENTO</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+              <button type="button" class="btn btn-primary">Registrar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fin Modal Bancos BBVA -->
+
+      <!-- Modal Bancos BCP-->
+      <div class="modal fade" id="bancos-bcp" tabindex="-1" aria-labelledby="bancos-bcpLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+          <div class="modal-content">
+            <div class="modal-header" style="background-color: coral;">
+              <h5 class="modal-title" id="exampleModalLabel" style="color: white;"><strong>BCP</strong></h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form class="row g-3" id="#" action="#" method="post">
+                <div class="col-md-3">
+                  <label class="form-label">NÚMERO REGISTRO</label>
+                  <input type="text" class="form-control" id="#" name="" readonly>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">DESCRIPCIÓN</label>
+                  <input type="text" class="form-control" id="#" name="">
+                </div>
+                <div class="col-md-3">
+                  <label class="form-label">MONTO</label>
+                  <input type="text" class="form-control" id="#" name="">
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">TIPO DE MOVIMIENTO</label>
+                  <select class="form-control" id="#" name="#">
+                  </select>
+                </div>              
+                <div class="col-md-2" style="align-self: flex-end; display: grid;">
+                    <button type="submit" class="btn btn-outline-success">Agregar</button>
+                </div>
+              </form>
+            </div>
+            <div class="col-12" style="padding: 10px;">
+              <table id="table-detalle-bancos-bbva" class="table table-striped" style="width:100%;">
+                <thead>
+                    <tr>
+                        <th scope="col">DESCRIPCIÓN</th>
+                        <th scope="col">MONTO</th>
+                        <th scope="col">TIPO MOVIMIENTO</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+              <button type="button" class="btn btn-primary">Registrar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fin Modal Bancos BCP-->
+
+      <!-- Modal Bancos INTERBANK-->
+      <div class="modal fade" id="bancos-interbank" tabindex="-1" aria-labelledby="bancos-interbankLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+          <div class="modal-content">
+            <div class="modal-header" style="background-color: seagreen;">
+              <h5 class="modal-title" id="exampleModalLabel" style="color: white;"><strong>INTERBANK</strong></h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form class="row g-3" id="#" action="#" method="post">
+                <div class="col-md-3">
+                  <label class="form-label">NÚMERO REGISTRO</label>
+                  <input type="text" class="form-control" id="#" name="" readonly>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">DESCRIPCIÓN</label>
+                  <input type="text" class="form-control" id="#" name="">
+                </div>
+                <div class="col-md-3">
+                  <label class="form-label">MONTO</label>
+                  <input type="text" class="form-control" id="#" name="">
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">TIPO MOVIMIENTO</label>
+                  <select class="form-control" id="#" name="#">
+                  </select>
+                </div>              
+                <div class="col-md-2" style="align-self: flex-end; display: grid;">
+                    <button type="submit" class="btn btn-outline-success">Agregar</button>
+                </div>
+              </form>
+            </div>
+            <div class="col-12" style="padding: 10px;">
+              <table id="table-detalle-bancos-bbva" class="table table-striped" style="width:100%;">
+                <thead>
+                    <tr>
+                        <th scope="col">DESCRIPCIÓN</th>
+                        <th scope="col">MONTO</th>
+                        <th scope="col">TIPO MOVIMIENTO</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+              <button type="button" class="btn btn-primary">Registrar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fin Modal Bancos INTERBANK-->
+
+      <!-- Modal Caja-->
+      <div class="modal fade" id="caja-mayor" tabindex="-1" aria-labelledby="nuevo-ingresoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+          <div class="modal-content">
+            <div class="modal-header" style="background-color: slategrey;">
+              <h5 class="modal-title" id="nuevo-ingresoLabel" style="color: white;"><strong>CAJA MAYOR</strong></h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form class="row g-3" id="#" action="#" method="post">
+                <div class="col-md-3">
+                  <label class="form-label">NÚMERO REGISTRO</label>
+                  <input type="text" class="form-control" id="#" name="" readonly>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">DESCRIPCIÓN</label>
+                  <input type="text" class="form-control" id="#" name="">
+                </div>
+                <div class="col-md-3">
+                  <label class="form-label">MONTO</label>
+                  <input type="text" class="form-control" id="#" name="">
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">TIPO MOVIMIENTO</label>
+                  <select class="form-control" id="#" name="#">
+                  </select>
+                </div> 
+                <div class="col-md-2" style="align-self: flex-end; display: grid;">
+                    <button type="submit" class="btn btn-outline-success">Agregar</button>
+                </div>
+                <div class="col-md-3" style="align-self: flex-end; display: grid;">
+                  <button type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#caja-secundaria">Caja Secundaria</button>
+                </div>
+              </form>
+            </div>
+            <div class="col-12" style="padding: 10px;">
+              <table id="table-detalle-ingreso" class="table table-striped" style="width:100%;">
+                <thead>
+                    <tr>
+                        <th scope="col">DESCRIPCIÓN</th>
+                        <th scope="col">MONTO</th>
+                        <th scope="col">TIPO MOVIMIENTO</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+              <button type="button" class="btn btn-primary">Registrar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="caja-secundaria" tabindex="-1" aria-labelledby="caja-secundariaLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+          <div class="modal-content">
+            <div class="modal-header" style="background-color: slategrey;">
+              <h5 class="modal-title" id="caja-secundariaLabel" style="color: white;"><strong>OTROS INGRESOS</strong></h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form class="row g-3" id="#" action="#" method="post">
+                <div class="col-md-3">
+                  <label class="form-label">NÚMERO CONTROL</label>
+                  <input type="text" class="form-control" id="#" name="" readonly>
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">MONTO</label>
+                  <input type="text" class="form-control" id="#" name="">
+                </div>
+                <div class="col-md-5">
+                  <label class="form-label">MÉTODO PAGO</label>
+                  <select class="form-control" id="#" name="#">
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">DESCRIPCIÓN OTRO INGRESO</label>
+                  <input type="text" class="form-control" id="#" name="">
+                </div>
+                <div class="col-md-2" style="align-self: flex-end; display: grid;">
+                    <button type="submit" class="btn btn-outline-success">Agregar</button>
+                </div>
+              </form>
+            </div>
+            <div class="col-12" style="padding: 10px;">
+              <table id="table-detalle-ingreso-otros" class="table table-striped" style="width:100%;">
+                <thead>
+                    <tr>
+                        <th scope="col">MONTO</th>
+                        <th scope="col">MÉTODO PAGO</th>
+                        <th scope="col">DESCRIPCION OTRO INGRESO</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+              <button type="button" class="btn btn-primary">Registrar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fin Modal Ingreso-->
+
+      <div class="row" style="margin-top: 10px;">
+        <div class="col">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Ingresos de la semana</h5>
+              <table class="table" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">FECHA</th>
+                        <th scope="col">EFECTIVO</th>
+                        <th scope="col">ELECTRÓNICO</th>
+                        <th scope="col">TOTAL</th>
+                      </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Egresos de la semana</h5>
+              <table class="table" class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">FECHA</th>
+                    <th scope="col">EFECTIVO</th>
+                    <th scope="col">ELECTRÓNICO</th>
+                    <th scope="col">TOTAL</th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Balance</h5>
+                <p>
+
+                </p>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.datatables.net/v/bs5/dt-1.13.5/datatables.min.js"></script>
+
+    <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"></script>
+
+    <script>
+
+  </script>
+</body>
+</html>
